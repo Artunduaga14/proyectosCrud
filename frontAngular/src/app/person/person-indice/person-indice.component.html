@@ -1,0 +1,67 @@
+<h2>Person</h2>
+
+
+<button class="btn-register" mat-raised-button color="primary" routerLink="/person/create">
+    <mat-icon>person_add</mat-icon> Registrar person
+</button>
+
+
+<mat-card>   
+    <mat-table [dataSource]="personas" class="mat-elevation-z8" *ngIf="personas.length">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>N°</mat-header-cell>
+            <mat-cell *matCellDef="let person; let i = index">{{ i + 1 }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="personName">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let person">{{ person.name }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+            <mat-header-cell *matHeaderCellDef>LastName</mat-header-cell>
+            <mat-cell *matCellDef="let person">{{person.lastName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-cell *matCellDef="let person">{{person.email}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="identification">
+            <mat-header-cell *matHeaderCellDef>Identification</mat-header-cell>
+            <mat-cell *matCellDef="let person">{{person.identification}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+            <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
+            <mat-cell *matCellDef="let person">{{person.age}}</mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="personName">
+            <mat-header-cell *matHeaderCellDef>Persona</mat-header-cell>
+            <mat-cell *matCellDef="let person">{{ person.personName }}</mat-cell>
+        </ng-container> -->
+
+        <ng-container matColumnDef="acciones">
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let person">
+                
+                <a mat-icon-button [routerLink]="['/person/update', person.id]">
+                    <mat-icon>edit</mat-icon>
+                </a>
+                <button mat-icon-button class="btn-delete" (click)="eliminarPersona(person)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+        <mat-row *matRowDef="let row; let i = index; columns: columnas;"></mat-row>
+    </mat-table>
+
+    <div *ngIf="personas.length === 0" class="text-muted mt-4 text-center">
+        <p><i class="fa fa-hourglass"></i> No hay usuarios registrados</p>
+    </div>
+</mat-card>
