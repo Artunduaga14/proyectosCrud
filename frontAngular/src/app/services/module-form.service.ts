@@ -1,21 +1,3 @@
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ModuleFormService {
-
-//   constructor() { }
-// }
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ModuleServiceService {
-
-//   constructor() { }
-// }
 
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -48,9 +30,8 @@ export class ModuleFormService {
   }
 
   // Actualizar una Modulea
- // POR ESTO:
- public updateModuleForm(id: number, relation: any): Observable<any> {
-  return this.http.put<any>(`${this.URLbase}/${id}`, relation);
+ public updateModuleForm(Module:any): Observable<any> {
+  return this.http.put(`${this.URLbase}/update`, Module);
 }
   // Eliminar (permanentemente) una Modulea
   public deleteModuleForm(id: number): Observable<any> {
