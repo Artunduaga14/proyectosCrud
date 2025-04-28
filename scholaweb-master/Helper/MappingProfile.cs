@@ -9,7 +9,7 @@ namespace Helper
         public MappingProfile()
         {
             CreateMap<Person, PersonDto>()
-                .ForMember(dest => dest.NameComplet, opt => opt.MapFrom(src => src.Name + " " + src.LastName))
+                //.ForMember(dest => dest.NameComplet, opt => opt.MapFrom(src => src.Name + " " + src.LastName))
                 .ReverseMap()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 

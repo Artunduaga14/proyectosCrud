@@ -27,9 +27,10 @@ export class FormUserComponent implements OnInit {
   noPersonsAvailable = false;
 
   form = this.formBuilder.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-    personId: [null, Validators.required]
+    Username: ['', Validators.required],
+    Password: ['', Validators.required],
+    PersonId: [null, Validators.required],
+    Status:[1]
   });
 
   ngOnInit(): void {

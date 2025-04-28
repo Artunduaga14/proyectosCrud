@@ -1,28 +1,33 @@
-<h2 style="text-align: center;">Registrar Usuario</h2>
+<h2 style="text-align: center;">Registrar person</h2>
 <form [formGroup]="form" (ngSubmit)="submit()" class="formulario">
 
     <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="Name">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password">
+        <mat-label>Lastname</mat-label>
+        <input matInput formControlName="LastName">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Selecciona una persona</mat-label>
-        <mat-select formControlName="personId">
-          <mat-option *ngFor="let p of persons" [value]="p.id">
-            {{ p.name }}
-        </mat-option>
-        </mat-select>
-        <mat-hint *ngIf="noPersonsAvailable" class="text-danger">
-            No hay personas disponibles
-        </mat-hint>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="Email">
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Indentification</mat-label>
+        <input matInput formControlName="Identification">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Age</mat-label>
+        <input matInput formControlName="Age" type="number">
+    </mat-form-field>
+
+ 
+    
     <div class="button-group">
         <button mat-flat-button type="submit" [disabled]="noPersonsAvailable">Registrar</button>
         <button mat-raised-button (click)="cancelar()" type="button">Cancelar</button>

@@ -30,6 +30,7 @@ export class PersonService {
 
   // Actualizar una persona
   public updatePerson(person: any): Observable<any> {
+    console.log('Actualizando usuario:', person);
     return this.http.put<any>(`${this.URLbase}/update`, person);
   }
 

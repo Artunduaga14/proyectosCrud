@@ -30,7 +30,9 @@ export class UserService {
 
   // Actualizar un usuario
   public updateUser(user: any): Observable<any> {
+    console.log('Actualizando usuario:', user);
     return this.http.put<any>(`${this.URLbase}/update`, user);
+    
   }
 
   // Eliminar un usuario

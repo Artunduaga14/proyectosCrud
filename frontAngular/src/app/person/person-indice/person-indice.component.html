@@ -1,10 +1,8 @@
 <h2>Person</h2>
 
-
 <button class="btn-register" mat-raised-button color="primary" routerLink="/person/create">
     <mat-icon>person_add</mat-icon> Registrar person
 </button>
-
 
 <mat-card>   
     <mat-table [dataSource]="personas" class="mat-elevation-z8" *ngIf="personas.length">
@@ -38,11 +36,6 @@
             <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
             <mat-cell *matCellDef="let person">{{person.age}}</mat-cell>
         </ng-container>
-
-        <!-- <ng-container matColumnDef="personName">
-            <mat-header-cell *matHeaderCellDef>Persona</mat-header-cell>
-            <mat-cell *matCellDef="let person">{{ person.personName }}</mat-cell>
-        </ng-container> -->
 
         <ng-container matColumnDef="acciones">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>

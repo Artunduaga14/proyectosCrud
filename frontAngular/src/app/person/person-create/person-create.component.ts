@@ -12,7 +12,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
 import { MatFormFieldModule, MatLabel, MatHint } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,16 +20,15 @@ import { NgFor, NgIf } from '@angular/common';
 import { PersonService } from '../../services/person.service';
 
 @Component({
-  selector: 'app-form-user',
+  selector: 'app-form-person',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule,],
   templateUrl: './person-create.component.html',
   styleUrl: './person-create.component.css'
 })
-export class FormUserComponent implements OnInit {
+export class FormPersonComponent implements OnInit {
 
   private formBuilder = inject(FormBuilder);
-  private userService = inject(UserService);
   private personService = inject(PersonService)
   private router = inject(Router);
 
@@ -38,9 +36,12 @@ export class FormUserComponent implements OnInit {
   noPersonsAvailable = false;
 
   form = this.formBuilder.group({
-    username: ['HOLA', Validators.required],
-    password: ['', Validators.required],
-    personId: [null, Validators.required]
+    Name: ['', Validators.required],
+    LastName: ['', Validators.required],
+    Email: ['', [Validators.required, Validators.email]],
+    Identification: ['', Validators.required],
+    Age: ['', Validators.required],
+    Status:[1]
   });
 
   ngOnInit(): void {
@@ -56,14 +57,15 @@ export class FormUserComponent implements OnInit {
   submit(): void {
     if (this.form.invalid) return;
 
-    this.userService.createUser(this.form.value).subscribe({
-      next: () => this.router.navigate(['/user']),
+    console.log(this.form.value);
+    this.personService.createPerson(this.form.value).subscribe({
+      next: () => this.router.navigate(['/person']),
       error: err => alert("Error al registrar: " + err.message)
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/user']);
+    this.router.navigate(['/person']);
   }
 
 }

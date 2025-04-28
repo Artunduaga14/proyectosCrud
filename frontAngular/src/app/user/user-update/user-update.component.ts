@@ -27,36 +27,60 @@ export class UpdateUserComponent implements OnInit{
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
     this.form = this.fb.group({
       id: [this.userId],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      personId: [0], // precargado manual
-      status: ['true', Validators.required],
+      UserName: ['', Validators.required],
+      Password: ['',],
+      PersonId: [0], // precargado manual
+      Status: ['', Validators.required],
     });
 
-    this.userService.getUserById(this.userId).subscribe(user => {
-      this.form.patchValue({
-        username: user.username,
-        password: '',
-        personId: user.personId,
-        status: String(user.status),
-      });
+    this.userService.getUserById(this.userId).subscribe({
+      next: (user) => {
+        console.log('Usuario obtenido:', user); // Para depuración
+        this.form.patchValue({
+          UserName: user.userName, // Corregir a userName si así viene del backend
+          Password: '', // Dejar vacío por seguridad
+          PersonId: user.personId,
+          Status: user.status === 1 ? 'true' : 'false', // Convertir número a string
+        });
+      },
+      error: (err) => {
+        console.error('Error al obtener usuario:', err);
+        alert('Error al cargar los datos del usuario');
+      }
     });
   }
 
   submit(): void {
     if (this.form.invalid) return;
+    
+    const formValue = this.form.value;
 
-    const payload = {
-      ...this.form.value,
-      status: this.form.value['state'] === 'true',
+    const payload: any = {
+      id: this.userId,
+      userName: formValue.UserName,
+      personId: formValue.PersonId,
+      status: formValue.Status === 'true'? 1 : 0,
     };
-
-    this.userService.updateUser(payload).subscribe({
-      next: () => this.router.navigate(['/user']),
-      error: err => alert('Error al actualizar: ' + err.message),
-    });
+  
+     // Solo incluir Password si se proporcionó un valor
+  if (formValue.Password && formValue.Password.trim() !== '') {
+    payload.Password = formValue.Password;
   }
 
+  console.log('Payload enviado:', payload); // Para depuración
+  
+  this.userService.updateUser(payload).subscribe({
+    next: () => {
+      alert('Usuario actualizado con éxito');
+      this.router.navigate(['/user']);
+    },
+    error: (err) => {
+      console.error('Error completo:', err);
+      alert('Error al actualizar: ' + (err.error?.message || err.message));
+    },
+  });
+}
+  
   cancelar(): void {
     this.router.navigate(['/user']);
   }

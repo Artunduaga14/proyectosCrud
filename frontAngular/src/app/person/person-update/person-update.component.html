@@ -1,1 +1,43 @@
-<p>person-update works!</p>
+<h2 style="text-align: center;">Actualizar Persona</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="formulario">
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="lastName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Identificación</mat-label>
+        <input matInput formControlName="identification" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Edad</mat-label>
+        <input matInput formControlName="age" type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="status">
+            <mat-option value="1">Activo</mat-option>
+            <mat-option value="0">Inactivo</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="button-group">
+        <button mat-flat-button color="primary" type="submit">
+            Guardar Cambios
+        </button>
+        <button mat-raised-button (click)="cancelar()" type="button">Cancelar</button>
+    </div>
+</form>
