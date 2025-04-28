@@ -6,40 +6,41 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonService {
+export class FormService {
 
   private http = inject(HttpClient);
-  private URLbase = environment.apiURL + 'api/Person';
+  private URLbase = environment.apiURL + 'api/Form';
 
   constructor() {}
 
   // Obtener todas las personas
-  public getAllPersons(): Observable<any> {
+  public getAllForm(): Observable<any> {
     return this.http.get<any>(`${this.URLbase}`);
   }
 
   // Obtener una persona por ID
-  public getPersonById(id: number): Observable<any> {
+  public getFormById(id: number): Observable<any> {
     return this.http.get<any>(`${this.URLbase}/${id}`);
   }
 
-  // Crear una nueva persona
-  public createPerson(person: any): Observable<any> {
-    return this.http.post<any>(`${this.URLbase}`, person);
+  // Crear una nueva Forma
+  public createForm(Form: any): Observable<any> {
+    return this.http.post<any>(`${this.URLbase}`, Form);
   }
 
-  // Actualizar una persona
-  public updatePerson(person: any): Observable<any> {
-    return this.http.put<any>(`${this.URLbase}/update`, person);
+  // Actualizar una Forma
+  public updateForm(Form: any): Observable<any> {
+    console.log('Actualizando usuario:', Form);
+    return this.http.put<any>(`${this.URLbase}/update`, Form);
   }
 
-  // Eliminar (permanentemente) una persona
-  public deletePerson(id: number): Observable<any> {
+  // Eliminar (permanentemente) una Forma
+  public deleteForm(id: number): Observable<any> {
     return this.http.delete<any>(`${this.URLbase}/${id}`);
   }
 
   // Eliminar lógico (si decides habilitar esa acción en el backend)
-  public deletePersonLogic(id: number): Observable<any> {
+  public deleteFormLogic(id: number): Observable<any> {
     return this.http.put<any>(`${this.URLbase}/logical/${id}`, {});
   }
 }

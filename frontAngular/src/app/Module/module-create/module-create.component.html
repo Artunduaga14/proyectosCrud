@@ -1,0 +1,18 @@
+<h2 style="text-align: center;">Registrar Module</h2>
+<form [formGroup]="form" (ngSubmit)="submit()" class="formulario">
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="Name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="Description">
+    </mat-form-field>
+   
+    <div class="button-group">
+        <button mat-flat-button type="submit" [disabled]="noModulesAvailable">Registrar</button>
+        <button mat-raised-button (click)="cancelar()" type="button">Cancelar</button>
+    </div>
+</form>

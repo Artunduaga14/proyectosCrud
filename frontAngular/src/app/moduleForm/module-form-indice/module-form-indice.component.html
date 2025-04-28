@@ -1,0 +1,48 @@
+<h2>Relaciones Módulo-Formulario</h2>
+
+<button class="btn-register" mat-raised-button color="primary" routerLink="/module-form/create">
+    <mat-icon>add_link</mat-icon> Nueva Relación
+</button>
+
+<mat-card>
+    <!-- <div *ngIf="loading" class="loading-spinner">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Cargando relaciones...</p>
+    </div> -->
+
+    <mat-table [dataSource]="moduleForms" class="mat-elevation-z8" *ngIf="moduleForms?.length && !loading">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>N°</mat-header-cell>
+            <mat-cell *matCellDef="let item; let i = index">{{ i + 1 }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="moduleName">
+            <mat-header-cell *matHeaderCellDef>Módulo</mat-header-cell>
+            <mat-cell *matCellDef="let item">{{ item.nameModule }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="formName">
+            <mat-header-cell *matHeaderCellDef>Formulario</mat-header-cell>
+            <mat-cell *matCellDef="let item">{{ item.nameForm }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let item">
+                <a mat-icon-button [routerLink]="['/module-form/update', item.id]">
+                    <mat-icon>edit</mat-icon>
+                </a>
+                <button mat-icon-button class="btn-delete" (click)="eliminarModuleForm(item)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+    </mat-table>
+
+    <div *ngIf="!moduleForms?.length && !loading" class="text-muted mt-4 text-center">
+        <p><i class="fa fa-hourglass"></i> No hay relaciones registradas</p>
+    </div>
+</mat-card>

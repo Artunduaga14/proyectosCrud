@@ -1,0 +1,45 @@
+<h2>Rol</h2>
+
+<button class="btn-register" mat-raised-button color="primary" routerLink="/rol/create">
+    <mat-icon>rol_add</mat-icon> Registrar module
+</button>
+
+<mat-card>   
+    <mat-table [dataSource]="rol" class="mat-elevation-z8" *ngIf="rol.length">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>N°</mat-header-cell>
+            <mat-cell *matCellDef="let module; let i = index">{{ i + 1 }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="rolName">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let rol">{{ rol.name }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>description</mat-header-cell>
+            <mat-cell *matCellDef="let rol">{{rol.description}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let rol">
+                
+                <a mat-icon-button [routerLink]="['/rol/update', rol.id]">
+                    <mat-icon>edit</mat-icon>
+                </a>
+                <button mat-icon-button class="btn-delete" (click)="eliminarRol(rol)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+        <mat-row *matRowDef="let row; let i = index; columns: columnas;"></mat-row>
+    </mat-table>
+
+    <div *ngIf="rol.length === 0" class="text-muted mt-4 text-center">
+        <p><i class="fa fa-hourglass"></i> No hay usuarios registrados</p>
+    </div>
+</mat-card>

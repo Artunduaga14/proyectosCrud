@@ -1,0 +1,39 @@
+<h2 style="text-align: center;">Actualizar Relación Módulo-Formulario</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="formulario">
+    <!-- Selector de Módulo -->
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Módulo</mat-label>
+        <mat-select formControlName="moduleId" required>
+            <mat-option *ngFor="let module of modules" [value]="module.id">
+                {{ module.name }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('moduleId')?.hasError('required')">
+            Seleccione un módulo
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Selector de Formulario -->
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Formulario</mat-label>
+        <mat-select formControlName="formId" required>
+            <mat-option *ngFor="let form of forms" [value]="form.id">
+                {{ form.name }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('formId')?.hasError('required')">
+            Seleccione un formulario
+        </mat-error>
+    </mat-form-field>
+
+    <div class="button-group">
+        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">
+            <span *ngIf="!loading">Actualizar Relación</span>
+            <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+        </button>
+        <button mat-raised-button color="warn" (click)="cancelar()" type="button">
+            Cancelar
+        </button>
+    </div>
+</form>
