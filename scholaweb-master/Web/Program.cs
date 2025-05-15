@@ -2,6 +2,10 @@ using Business;
 using Business.services;
 using Data;
 using Data.factories;
+using Data.repositories.Global;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +36,9 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IDataFactoryGlobal, GlobalFactory>();
 
 builder.Services.AddDataAccessFactory("SQLServer", builder.Configuration);
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<UserData>();
+builder.Services.AddScoped<UserRolData>();
 builder.Services.AddScoped<PersonBusiness>();
 //builder.Services.AddScoped<UserBusiness>();
 builder.Services.AddScoped<RolBusiness>();
@@ -42,6 +49,7 @@ builder.Services.AddScoped<UserBusiness>();
 builder.Services.AddScoped<UserRolBusiness>();
 builder.Services.AddScoped<RolFormPermissionBusiness>();
 builder.Services.AddScoped<PermissionBusiness>();
+
 
 
 
@@ -61,6 +69,28 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
+// Configuración de JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        //var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+        //Console.WriteLine("JWT SecretKey configurada: " + (string.IsNullOrEmpty(jwtSettings["SecretKey"]) ? "NO DISPONIBLE" : "DISPONIBLE"));
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero,
+            IssuerSigningKey = new SymmetricSecurityKey
+                (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 
 var app = builder.Build();
   

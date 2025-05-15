@@ -6,7 +6,6 @@ import { MatFormFieldModule, MatLabel, MatHint } from '@angular/material/form-fi
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { FormService } from '../../services/form.service';
 import { ModuleService } from '../../services/module.service';
 
 @Component({

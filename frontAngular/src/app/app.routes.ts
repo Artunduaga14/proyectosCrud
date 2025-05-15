@@ -21,6 +21,10 @@ import { UpdateRolComponent } from './rol/rol-update/rol-update.component';
 import { ModuleFormIndiceComponent } from './moduleForm/module-form-indice/module-form-indice.component';
 import { ModuleFormCreateComponent } from './moduleForm/module-form-create/module-form-create.component';
 import { ModuleFormUpdateComponent } from './moduleForm/module-form-update/module-form-update.component';
+import { UserRolIndiceComponent } from './userRol/user-rol-indice/user-rol-indice.component';
+import { UserRolCreateComponent } from './userRol/user-rol-create/user-rol-create.component';
+import { UsuarioRolUpdateComponent } from './userRol/user-rol-update/user-rol-update.component';
+import { LoginIndiceComponent } from './login/login-indice/login-indice.component';
 
 export const routes: Routes = [
     {path: '', component:LandingComponent},
@@ -40,23 +44,32 @@ export const routes: Routes = [
     {path: 'form/create', component:FormFormsComponent},
     {path: 'form/update/:id', component:UpdateFormComponent},
 
-     //module
-     {path: 'module', component:IndiceModuleComponent},
-     {path: 'module/create', component:FormModuleComponent},
-     {path: 'module/update/:id', component:UpdateModuleComponent},
+    //module
+    {path: 'module', component:IndiceModuleComponent},
+    {path: 'module/create', component:FormModuleComponent},
+    {path: 'module/update/:id', component:UpdateModuleComponent},
 
-     //permission
-     {path: 'permission', component:IndicePermissionComponent},
-     {path: 'permission/create', component:FormPermissionComponent},
-     {path: 'permission/update/:id', component:UpdatePermissionComponent},
+    //permission
+    {path: 'permission', component:IndicePermissionComponent},
+    {path: 'permission/create', component:FormPermissionComponent},
+    {path: 'permission/update/:id', component:UpdatePermissionComponent},
 
-      //rol
-      {path: 'rol', component:IndiceRolComponent},
-      {path: 'rol/create', component:FormRolComponent},
-      {path: 'rol/update/:id', component:UpdateRolComponent},
+    //rol
+    {path: 'rol', component:IndiceRolComponent},
+    {path: 'rol/create', component:FormRolComponent},
+    {path: 'rol/update/:id', component:UpdateRolComponent},
 
-        //module-Form
-        {path: 'module-form', component:ModuleFormIndiceComponent},
-        {path: 'module-form/create', component:ModuleFormCreateComponent},
-        {path: 'module-form/update/:id', component:ModuleFormUpdateComponent},
+    //module-Form
+    {path: 'module-form', component:ModuleFormIndiceComponent},
+    {path: 'module-form/create', component:ModuleFormCreateComponent},
+    {path: 'module-form/update/:id', component:ModuleFormUpdateComponent},
+
+    //user-rol
+    {path: 'user-rol', component:UserRolIndiceComponent},
+    {path: 'user-rol/create', component:UserRolCreateComponent},
+    {path: 'user-rol/update/:id', component:UsuarioRolUpdateComponent},
+
+    //login
+    {path: 'login', component:LoginIndiceComponent},
+
 ];

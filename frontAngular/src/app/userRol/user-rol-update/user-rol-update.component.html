@@ -1,0 +1,39 @@
+<h2 style="text-align: center;">Actualizar Relación user-rol</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="formulario">
+    <!-- Selector de Módulo -->
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>user</mat-label>
+        <mat-select formControlName="userId" required>
+            <mat-option *ngFor="let user of user" [value]="user.id">
+                {{ user.userName }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('userId')?.hasError('required')">
+            Seleccione un módulo
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Selector de Formulario -->
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>rol</mat-label>
+        <mat-select formControlName="rolId" required>
+            <mat-option *ngFor="let rol of roles" [value]="rol.id">
+                {{ rol.name }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('rolId')?.hasError('required')">
+            Seleccione un formulario
+        </mat-error>
+    </mat-form-field>
+
+    <div class="button-group">
+        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">
+            <span *ngIf="!loading">Actualizar Relación</span>
+            <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+        </button>
+        <button mat-raised-button color="warn" (click)="cancelar()" type="button">
+            Cancelar
+        </button>
+    </div>
+</form>

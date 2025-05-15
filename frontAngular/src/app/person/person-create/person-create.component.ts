@@ -1,14 +1,4 @@
-// import { Component } from '@angular/core';
 
-// @Component({
-//   selector: 'app-person-create',
-//   imports: [],
-//   templateUrl: './person-create.component.html',
-//   styleUrl: './person-create.component.css'
-// })
-// export class PersonCreateComponent {
-
-// }
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +6,6 @@ import { MatFormFieldModule, MatLabel, MatHint } from '@angular/material/form-fi
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { NgFor, NgIf } from '@angular/common';
 import { PersonService } from '../../services/person.service';
 
 @Component({

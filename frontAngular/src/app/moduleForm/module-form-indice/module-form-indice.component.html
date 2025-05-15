@@ -5,11 +5,7 @@
 </button>
 
 <mat-card>
-    <!-- <div *ngIf="loading" class="loading-spinner">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>Cargando relaciones...</p>
-    </div> -->
-
+ 
     <mat-table [dataSource]="moduleForms" class="mat-elevation-z8" *ngIf="moduleForms?.length && !loading">
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>N°</mat-header-cell>

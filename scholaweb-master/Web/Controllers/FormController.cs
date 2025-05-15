@@ -6,6 +6,7 @@ using Utilities.Exeptions;
 
 namespace Web.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]

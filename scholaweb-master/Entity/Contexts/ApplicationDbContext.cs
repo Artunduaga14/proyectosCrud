@@ -15,7 +15,7 @@ namespace Entity
         public DbSet<Module> module { get; set; }
         public DbSet<Permission> permission { get; set; }
         public DbSet<User> user { get; set; }
-        public DbSet<UserRol> userRol { get; set; }
+        public DbSet<UserRol>RolUser { get; set; }
         public DbSet<ModuleForm> ModuleForm  { get; set; }
         public DbSet<RolFormPermission> RolFormPermission { get; set; }
      
