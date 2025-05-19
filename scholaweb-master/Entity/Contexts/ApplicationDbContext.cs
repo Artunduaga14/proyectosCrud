@@ -18,7 +18,8 @@ namespace Entity
         public DbSet<UserRol>RolUser { get; set; }
         public DbSet<ModuleForm> ModuleForm  { get; set; }
         public DbSet<RolFormPermission> RolFormPermission { get; set; }
-     
+        public DbSet<LogDatabase> LogDatabase { get; set; }
+
         protected readonly IConfiguration? _configuration;
       
         //configurar opciones del contexto(como el proveedor de base de datos).

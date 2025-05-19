@@ -7,7 +7,7 @@ namespace Web
 {
     public static class ServicesCollectionExtensions
     {
-        public static IServiceCollection AddDataAccessFactory(this IServiceCollection services,string dbString, IConfiguration configuration)
+        public static IServiceCollection AddDataAccessFactory(this IServiceCollection services, string dbString, IConfiguration configuration)
         {
             // Leer la configuración del motor, por ejemplo, "Postgres", "Mysql", "SqlServer", etc.
             string databaseEngine = dbString;
@@ -25,7 +25,7 @@ namespace Web
                 case "MySQL":
                     //services.AddScoped<IDataAccessFactory, MysqlDataFactory>();
                     //services.AddScoped<IDataAccessFactory, MySqlDataFactory>();
-                     
+
                     services.AddDbContext<ApplicationDbContext>(options =>
                         options.UseMySQL(configuration.GetConnectionString(dbString)));
                     break;

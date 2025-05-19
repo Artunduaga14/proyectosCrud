@@ -14,6 +14,7 @@ namespace Entity.DTOs
         public string Password { get; set; }
         public int Status { get; set; }
         public int PersonId { get; set; }
+        public int UsuarioAccion { get; set; }
     }
 }
 

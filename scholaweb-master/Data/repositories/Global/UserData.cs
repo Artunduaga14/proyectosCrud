@@ -29,6 +29,17 @@ namespace Data.repositories.Global
             //return user != null;
         }
 
+        public async Task<User?> ObtenerPorId(int id)
+        {
+            return await GetByIdAsyncLinq(id);
+        }
+
+        public async Task<bool> Actualizar(User user)
+        {
+            return await UpdateAsyncLinq(user);
+        }
+
+
 
     }
 }
