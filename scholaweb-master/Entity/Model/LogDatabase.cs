@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Model
 {
-    // Entity/LogDatabase.cs
+    
     public class LogDatabase
     {
         public int Id { get; set; }

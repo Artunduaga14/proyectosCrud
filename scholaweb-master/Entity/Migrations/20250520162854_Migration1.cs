@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -11,6 +11,9 @@ namespace Entity.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "security");
+
             migrationBuilder.CreateTable(
                 name: "form",
                 columns: table => new
@@ -135,7 +138,8 @@ namespace Entity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "user",
+                name: "User",
+                schema: "security",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -147,9 +151,9 @@ namespace Entity.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_user_Person_PersonId",
+                        name: "FK_User_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "Id",
@@ -202,18 +206,29 @@ namespace Entity.Migrations
                 {
                     table.PrimaryKey("PK_RolUser", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_RolUser_User_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "security",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_RolUser_rol_RolId",
                         column: x => x.RolId,
                         principalTable: "rol",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RolUser_user_UserId",
-                        column: x => x.UserId,
-                        principalTable: "user",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LogDatabase_Fecha",
+                table: "LogDatabase",
+                column: "Fecha");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LogDatabase_UsuarioId",
+                table: "LogDatabase",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModuleForm_FormId",
@@ -251,8 +266,9 @@ namespace Entity.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_user_PersonId",
-                table: "user",
+                name: "IX_User_PersonId",
+                schema: "security",
+                table: "User",
                 column: "PersonId");
         }
 
@@ -281,10 +297,11 @@ namespace Entity.Migrations
                 name: "permission");
 
             migrationBuilder.DropTable(
-                name: "rol");
+                name: "User",
+                schema: "security");
 
             migrationBuilder.DropTable(
-                name: "user");
+                name: "rol");
 
             migrationBuilder.DropTable(
                 name: "Person");

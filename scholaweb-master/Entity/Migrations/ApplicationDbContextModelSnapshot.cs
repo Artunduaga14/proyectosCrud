@@ -82,6 +82,10 @@ namespace Entity.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Fecha");
+
+                    b.HasIndex("UsuarioId");
+
                     b.ToTable("LogDatabase");
                 });
 
@@ -269,7 +273,7 @@ namespace Entity.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("user");
+                    b.ToTable("User", "security");
                 });
 
             modelBuilder.Entity("Entity.Model.UserRol", b =>

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250518220610_Migration1")]
+    [Migration("20250520162854_Migration1")]
     partial class Migration1
     {
         /// <inheritdoc />
@@ -84,6 +84,10 @@ namespace Entity.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Fecha");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("LogDatabase");
                 });
@@ -272,7 +276,7 @@ namespace Entity.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("user");
+                    b.ToTable("User", "security");
                 });
 
             modelBuilder.Entity("Entity.Model.UserRol", b =>

@@ -1,0 +1,41 @@
+<mat-card class="tabla-container">
+    <h2 class="titulo-tabla">Lista de Publicaciones</h2>
+  
+    <mat-table [dataSource]="posts" class="mat-elevation-z8 tabla-estilizada" *ngIf="posts.length">
+  
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+        <mat-cell *matCellDef="let post"> {{ post.id }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Título </mat-header-cell>
+        <mat-cell *matCellDef="let post"> {{ post.title }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="body">
+        <mat-header-cell *matHeaderCellDef> Contenido </mat-header-cell>
+        <mat-cell *matCellDef="let post"> {{ post.body }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let post">
+          <button mat-icon-button color="primary" (click)="editar(post)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="eliminar(post)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas;" class="fila-tabla"></mat-row>
+    </mat-table>
+  
+    <div *ngIf="posts.length === 0" class="texto-vacio">
+      <p><mat-icon>hourglass_empty</mat-icon> No hay publicaciones registradas</p>
+    </div>
+  </mat-card>
+  

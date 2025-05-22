@@ -28,6 +28,8 @@ namespace Web.Controllers
             try
             {
                 var token = await _authService.CreateToken(login);
+                if (token == null)
+                    return Unauthorized("Credenciales Invalidas");
                 return Ok(new { token = token });
             }
             catch (ValidationException ex)

@@ -30,7 +30,7 @@ namespace Business.services
             var user = await _user.ValidateUser(dto);
             if (user == null)
             {
-                throw new UnauthorizedAccessException("Credenciales inválidas");
+                return null;
             }
             var roles = await GetRoles(user.Id);
 

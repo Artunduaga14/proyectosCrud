@@ -25,9 +25,10 @@ import { UserRolIndiceComponent } from './userRol/user-rol-indice/user-rol-indic
 import { UserRolCreateComponent } from './userRol/user-rol-create/user-rol-create.component';
 import { UsuarioRolUpdateComponent } from './userRol/user-rol-update/user-rol-update.component';
 import { LoginIndiceComponent } from './login/login-indice/login-indice.component';
+import { IndicePostsComponent } from './indice-post/indice-post/indice-post.component';
 
 export const routes: Routes = [
-    {path: '', component:LandingComponent},
+    { path: '', redirectTo: '/login', pathMatch: 'full' }, // Ruta vacía redirige a login
 
     //User
     {path: 'user', component:IndiceUserComponent},
@@ -71,5 +72,8 @@ export const routes: Routes = [
 
     //login
     {path: 'login', component:LoginIndiceComponent},
+
+    //api publica
+    {path: 'post', component: IndicePostsComponent}
 
 ];

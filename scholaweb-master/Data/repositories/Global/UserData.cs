@@ -23,7 +23,7 @@ namespace Data.repositories.Global
                 .FirstOrDefaultAsync();
 
             bool sucess = false;
-            sucess = (user != null) ? true : throw new UnauthorizedAccessException("Credenciales inválidas");
+            sucess = (user != null) ? true : false;
 
             return user;
             //return user != null;

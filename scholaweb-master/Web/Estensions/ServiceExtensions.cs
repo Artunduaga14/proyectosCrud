@@ -16,7 +16,7 @@ namespace Web.Extensions
             services.AddAuthorization();
             services.AddScoped<IDataFactoryGlobal, GlobalFactory>();
             services.AddDataAccessFactory("SQLServer", configuration);
-
+            
             // Business & Data
             services.AddScoped<AuthService>();
             services.AddScoped<UserData>();
@@ -30,17 +30,16 @@ namespace Web.Extensions
             services.AddScoped<UserRolBusiness>();
             services.AddScoped<RolFormPermissionBusiness>();
             services.AddScoped<PermissionBusiness>();
-
-            //LOG 
+            
+            // LOG - Aseguramos que esté correctamente registrado
+            // Primero registramos la interfaz y su implementación
             services.AddScoped<ILogRepository, LogRepository>();
+            // Luego registramos el servicio de negocio que usa la interfaz
             services.AddScoped<LogBusiness>();
-
           
-
-
             // AutoMapper
             services.AddAutoMapper(typeof(Helper.MappingProfile));
-
+            
             return services;
         }
     }

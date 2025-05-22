@@ -1,6 +1,9 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Entity.Model
 {
+    [Table("User", Schema = "security")]
     public class User
     {
         public int Id { get; set; }

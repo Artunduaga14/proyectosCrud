@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data.repositories.Global
 {
+    // El problema principal está aquí: falta implementar la interfaz ILogRepository
     public class LogRepository : ILogRepository
     {
         private readonly ApplicationDbContext _context;

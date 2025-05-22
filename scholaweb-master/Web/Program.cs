@@ -13,7 +13,6 @@ var app = builder.Build();
 
 
 
-
 // Inicializar datos
 app.InitializeDatabase();
 

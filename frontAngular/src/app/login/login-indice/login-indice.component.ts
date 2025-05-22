@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-indice',
@@ -31,12 +32,17 @@ export class LoginIndiceComponent {
     this.loginService.login(userName ?? '', password ?? '').subscribe({
       next: (response) => {
         console.log('Login exitoso:', response);
-        alert(`Bienvenido ${userName ?? ''}!`);
-        this.router.navigate(['/user']);
+        // alert(`Bienvenido ${userName ?? ''}!`);
+        this.router.navigate(['/person']);
       },
       error: (error) => {
         console.error('Error en el login:', error);
-        alert('Usuario o contraseña incorrectos');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Usuario o contraseña incorrectos',
+          confirmButtonText: 'Aceptar',
+        })
       }
     });
   }
