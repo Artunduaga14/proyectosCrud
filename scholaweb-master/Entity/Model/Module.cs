@@ -1,6 +1,8 @@
-﻿namespace Entity.Model
+﻿using Entity.Model.Base;
+
+namespace Entity.Model
 {
-    public class Module
+    public class Module : AuditableEntity
     {
         public int Id { get; set; } 
         public string Name { get; set; }

@@ -10,13 +10,12 @@ namespace Entity.Model
     public class LogDatabase
     {
         public int Id { get; set; }
-        public int UsuarioId { get; set; }
-        public string Accion { get; set; } = string.Empty; // INSERT, UPDATE, DELETE
-        public string EntidadAfectada { get; set; } = string.Empty;
-        public string DatosAntiguos { get; set; } = string.Empty;
-        public string DatosNuevos { get; set; } = string.Empty;
-        public DateTime Fecha { get; set; } = DateTime.Now;
-        public string IP { get; set; } = string.Empty;
+        public string TableName { get; set; } = string.Empty;
+        public string Action { get; set; } = string.Empty;
+        public string? Key { get; set; }
+        public string? Changes { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string? PerformedBy { get; set; }
     }
 
 }

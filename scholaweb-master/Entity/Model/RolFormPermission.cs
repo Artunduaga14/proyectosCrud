@@ -1,6 +1,8 @@
-﻿namespace Entity.Model
+﻿using Entity.Model.Base;
+
+namespace Entity.Model
 {
-    public class RolFormPermission
+    public class RolFormPermission : AuditableEntity
     {
         public int Id { get; set; }
         public int RolId { get; set; }

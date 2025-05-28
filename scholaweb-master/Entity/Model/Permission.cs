@@ -1,6 +1,8 @@
-﻿namespace Entity.Model
+﻿using Entity.Model.Base;
+
+namespace Entity.Model
 {
-    public class Permission
+    public class Permission : AuditableEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

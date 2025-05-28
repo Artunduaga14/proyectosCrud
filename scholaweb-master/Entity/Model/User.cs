@@ -1,10 +1,11 @@
 ﻿
+using Entity.Model.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
     [Table("User", Schema = "security")]
-    public class User
+    public class User : AuditableEntity
     {
         public int Id { get; set; }
         public string UserName { get; set; }

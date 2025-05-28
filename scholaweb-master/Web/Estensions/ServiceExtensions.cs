@@ -31,11 +31,6 @@ namespace Web.Extensions
             services.AddScoped<RolFormPermissionBusiness>();
             services.AddScoped<PermissionBusiness>();
             
-            // LOG - Aseguramos que esté correctamente registrado
-            // Primero registramos la interfaz y su implementación
-            services.AddScoped<ILogRepository, LogRepository>();
-            // Luego registramos el servicio de negocio que usa la interfaz
-            services.AddScoped<LogBusiness>();
           
             // AutoMapper
             services.AddAutoMapper(typeof(Helper.MappingProfile));

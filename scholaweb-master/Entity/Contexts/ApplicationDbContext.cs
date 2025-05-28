@@ -1,9 +1,11 @@
 ﻿using Dapper;
 using Entity.Model;
+using Entity.Model.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using System.Text.Json;
 
 namespace Entity
 {
@@ -22,7 +24,7 @@ namespace Entity
 
         protected readonly IConfiguration? _configuration;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration = null)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration? configuration = null)
             : base(options)
         {
             _configuration = configuration;
@@ -39,90 +41,89 @@ namespace Entity
             modelBuilder.Entity<LogDatabase>()
                 .Property(l => l.Id)
                 .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<LogDatabase>()
-                .HasIndex(l => l.Fecha);
-
-            modelBuilder.Entity<LogDatabase>()
-                .HasIndex(l => l.UsuarioId);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.EnableSensitiveDataLogging();
-        }
 
-        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        //Metodo Sobreescrito para la Auditoria
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            configurationBuilder.Properties<decimal>().HavePrecision(18, 2);
-        }
+            var now = DateTime.UtcNow;
+            var currentUser = "system"; // TODO: Reemplazar por usuario actual cuando implementes auth
 
-        public override int SaveChanges()
-        {
-            EnsureAudit();
-            return base.SaveChanges();
-        }
+            var entries = ChangeTracker.Entries()
+                .Where(e =>
+                    e.Entity is AuditableEntity &&
+                    e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted)
+                .ToList();
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-        {
-            EnsureAudit();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        public async Task<IEnumerable<T>> QueryAsync<T>(string text, object parameters = null, int? timeout = null, CommandType? type = null)
-        {
-            using var command = new DapperEFCoreCommand(this, text, parameters, timeout, type, CancellationToken.None);
-            var connection = this.Database.GetDbConnection();
-            return await connection.QueryAsync<T>(command.Definition);
-        }
-
-        public async Task<T> QueryFirstOrDefaultAsync<T>(string text, object parameters = null, int? timeout = null, CommandType? type = null)
-        {
-            using var command = new DapperEFCoreCommand(this, text, parameters, timeout, type, CancellationToken.None);
-            var connection = this.Database.GetDbConnection();
-            return await connection.QueryFirstOrDefaultAsync<T>(command.Definition);
-        }
-
-        public async Task<int> ExecuteAsync(string text, object parametres = null, int? timeout = null, CommandType? type = null)
-        {
-            using var command = new DapperEFCoreCommand(this, text, parametres, timeout, type, CancellationToken.None);
-            var connection = this.Database.GetDbConnection();
-            return await connection.ExecuteAsync(command.Definition);
-        }
-
-        public async Task<T> ExecuteScalarAsync<T>(string query, object parameters = null, int? timeout = null, CommandType? type = null)
-        {
-            using var command = new DapperEFCoreCommand(this, query, parameters, timeout, type, CancellationToken.None);
-            var connection = this.Database.GetDbConnection();
-            return await connection.ExecuteScalarAsync<T>(command.Definition);
-        }
-
-        private void EnsureAudit()
-        {
-            ChangeTracker.DetectChanges();
-        }
-
-        public readonly struct DapperEFCoreCommand : IDisposable
-        {
-            public DapperEFCoreCommand(DbContext context, string text, object parameters, int? timeout, CommandType? type, CancellationToken ct)
+            foreach (var entry in entries)
             {
-                var transaction = context.Database.CurrentTransaction?.GetDbTransaction();
-                var commandType = type ?? CommandType.Text;
-                var commandTimeout = timeout ?? context.Database.GetCommandTimeout() ?? 30;
+                // Evitar auditar registros de la propia tabla de logs
+                if (entry.Entity is LogDatabase)
+                    continue;
 
-                Definition = new CommandDefinition(
-                    text,
-                    parameters,
-                    transaction,
-                    commandTimeout,
-                    commandType,
-                    cancellationToken: ct
-                );
+                var entity = (AuditableEntity)entry.Entity;
+
+                var tableName = entry.Metadata.GetTableName()!;
+                var key = entry.Properties.First(p => p.Metadata.IsPrimaryKey()).CurrentValue?.ToString();
+
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entity.CreatedAt = now;
+                        entity.CreatedBy = currentUser;
+
+                        LogDatabase.Add(new LogDatabase
+                        {
+                            TableName = tableName,
+                            Action = "Insert",
+                            Key = key,
+                            Changes = JsonSerializer.Serialize(
+                                entry.CurrentValues.Properties.ToDictionary(p => p.Name, p => entry.CurrentValues[p.Name])
+                            ),
+                            Timestamp = now,
+                            PerformedBy = currentUser
+                        });
+                        break;
+
+                    case EntityState.Modified:
+                        entity.UpdatedAt = now;
+                        entity.UpdatedBy = currentUser;
+
+                        var changes = new
+                        {
+                            Original = entry.OriginalValues.Properties.ToDictionary(p => p.Name, p => entry.OriginalValues[p.Name]),
+                            Current = entry.CurrentValues.Properties.ToDictionary(p => p.Name, p => entry.CurrentValues[p.Name])
+                        };
+
+                        LogDatabase.Add(new LogDatabase
+                        {
+                            TableName = tableName,
+                            Action = "Update",
+                            Key = key,
+                            Changes = JsonSerializer.Serialize(changes),
+                            Timestamp = now,
+                            PerformedBy = currentUser
+                        });
+                        break;
+
+                    case EntityState.Deleted:
+                        LogDatabase.Add(new LogDatabase
+                        {
+                            TableName = tableName,
+                            Action = "Delete",
+                            Key = key,
+                            Changes = JsonSerializer.Serialize(
+                                entry.OriginalValues.Properties.ToDictionary(p => p.Name, p => entry.OriginalValues[p.Name])
+                            ),
+                            Timestamp = now,
+                            PerformedBy = currentUser
+                        });
+                        break;
+                }
             }
 
-            public CommandDefinition Definition { get; }
-
-            public void Dispose() { }
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

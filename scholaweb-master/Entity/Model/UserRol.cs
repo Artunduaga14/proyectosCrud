@@ -1,6 +1,8 @@
-﻿namespace Entity.Model
+﻿using Entity.Model.Base;
+
+namespace Entity.Model
 {
-    public class UserRol
+    public class UserRol : AuditableEntity
     {
         public int Id { get; set; }
 
