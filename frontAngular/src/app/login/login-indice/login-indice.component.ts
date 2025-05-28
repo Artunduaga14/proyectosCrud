@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../../services/Auth/login.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -33,7 +33,8 @@ export class LoginIndiceComponent {
       next: (response) => {
         console.log('Login exitoso:', response);
         // alert(`Bienvenido ${userName ?? ''}!`);
-        this.router.navigate(['/person']);
+        this.loginService.saveToken(response.token);
+        this.router.navigate(['/user']);
       },
       error: (error) => {
         console.error('Error en el login:', error);

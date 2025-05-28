@@ -26,54 +26,57 @@ import { UserRolCreateComponent } from './userRol/user-rol-create/user-rol-creat
 import { UsuarioRolUpdateComponent } from './userRol/user-rol-update/user-rol-update.component';
 import { LoginIndiceComponent } from './login/login-indice/login-indice.component';
 import { IndicePostsComponent } from './indice-post/indice-post/indice-post.component';
+import { authGuard } from './services/Auth/auth.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/login', pathMatch: 'full' }, // Ruta vacía redirige a login
+
+    // Home
+    {path: '', component: LandingComponent, canActivate: [authGuard]},
 
     //User
-    {path: 'user', component:IndiceUserComponent},
-    {path: 'user/create', component:FormUserComponent},
-    {path: 'user/update/:id', component:UpdateUserComponent},
+    {path: 'user', component:IndiceUserComponent, canActivate: [authGuard]},
+    {path: 'user/create', component:FormUserComponent, canActivate: [authGuard]},
+    {path: 'user/update/:id', component:UpdateUserComponent, canActivate: [authGuard]},
 
     //person
-    {path: 'person', component:IndicePersonComponent},
-    {path: 'person/create', component:FormPersonComponent},
-    {path: 'person/update/:id', component:UpdatePersonComponent},
+    {path: 'person', component:IndicePersonComponent, canActivate: [authGuard]},
+    {path: 'person/create', component:FormPersonComponent, canActivate: [authGuard]},
+    {path: 'person/update/:id', component:UpdatePersonComponent, canActivate: [authGuard]},
 
     //form
-    {path: 'form', component:IndiceFormComponent},
-    {path: 'form/create', component:FormFormsComponent},
-    {path: 'form/update/:id', component:UpdateFormComponent},
+    {path: 'form', component:IndiceFormComponent, canActivate: [authGuard]},
+    {path: 'form/create', component:FormFormsComponent, canActivate: [authGuard]},
+    {path: 'form/update/:id', component:UpdateFormComponent, canActivate: [authGuard]},
 
     //module
-    {path: 'module', component:IndiceModuleComponent},
-    {path: 'module/create', component:FormModuleComponent},
-    {path: 'module/update/:id', component:UpdateModuleComponent},
+    {path: 'module', component:IndiceModuleComponent, canActivate: [authGuard]},
+    {path: 'module/create', component:FormModuleComponent, canActivate: [authGuard]},
+    {path: 'module/update/:id', component:UpdateModuleComponent, canActivate: [authGuard]},
 
     //permission
-    {path: 'permission', component:IndicePermissionComponent},
-    {path: 'permission/create', component:FormPermissionComponent},
-    {path: 'permission/update/:id', component:UpdatePermissionComponent},
+    {path: 'permission', component:IndicePermissionComponent, canActivate: [authGuard]},
+    {path: 'permission/create', component:FormPermissionComponent, canActivate: [authGuard]},
+    {path: 'permission/update/:id', component:UpdatePermissionComponent, canActivate: [authGuard]},
 
     //rol
-    {path: 'rol', component:IndiceRolComponent},
-    {path: 'rol/create', component:FormRolComponent},
-    {path: 'rol/update/:id', component:UpdateRolComponent},
+    {path: 'rol', component:IndiceRolComponent, canActivate: [authGuard]},
+    {path: 'rol/create', component:FormRolComponent, canActivate: [authGuard]},
+    {path: 'rol/update/:id', component:UpdateRolComponent, canActivate: [authGuard]},
 
     //module-Form
-    {path: 'module-form', component:ModuleFormIndiceComponent},
-    {path: 'module-form/create', component:ModuleFormCreateComponent},
-    {path: 'module-form/update/:id', component:ModuleFormUpdateComponent},
+    {path: 'module-form', component:ModuleFormIndiceComponent, canActivate: [authGuard]},
+    {path: 'module-form/create', component:ModuleFormCreateComponent, canActivate: [authGuard]},
+    {path: 'module-form/update/:id', component:ModuleFormUpdateComponent, canActivate: [authGuard]},
 
     //user-rol
-    {path: 'user-rol', component:UserRolIndiceComponent},
-    {path: 'user-rol/create', component:UserRolCreateComponent},
-    {path: 'user-rol/update/:id', component:UsuarioRolUpdateComponent},
+    {path: 'user-rol', component:UserRolIndiceComponent, canActivate: [authGuard]},
+    {path: 'user-rol/create', component:UserRolCreateComponent, canActivate: [authGuard]},
+    {path: 'user-rol/update/:id', component:UsuarioRolUpdateComponent, canActivate: [authGuard]},
 
     //login
     {path: 'login', component:LoginIndiceComponent},
 
     //api publica
-    {path: 'post', component: IndicePostsComponent}
+    {path: 'post', component: IndicePostsComponent, canActivate: [authGuard]}
 
 ];

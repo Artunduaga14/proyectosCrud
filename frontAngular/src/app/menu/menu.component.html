@@ -1,13 +1,8 @@
 <mat-toolbar>
   <samp>
-    <!-- <a routerLink="" mat-button>
+    <a routerLink="" mat-button>
       <mat-icon>home</mat-icon>
       <span>Home</span>
-    </a> -->
-
-    <a routerLink="login" mat-button>
-      <mat-icon>login</mat-icon>
-      <span>Login</span>
     </a>
 
     <a routerLink="user" mat-button>
@@ -53,6 +48,11 @@
      <a routerLink="post" mat-button>
       <mat-icon>integration_instructions</mat-icon>
       <span>Api publica</span>
+    </a>
+
+    <a (click)="logout()" mat-button>
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
     </a>
   </samp>
 </mat-toolbar>

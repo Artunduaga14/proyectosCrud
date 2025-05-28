@@ -2,13 +2,9 @@
 using Entity.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.services
 {
@@ -34,11 +30,13 @@ namespace Business.services
             }
             var roles = await GetRoles(user.Id);
 
+            Console.WriteLine($"Username: {user.UserName}");
+
             var claims = new List<Claim>
-     {
-         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-         new Claim(ClaimTypes.Name, user.UserName),
-     };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+            };
 
             // Add each role as a separate Claim
             foreach (var role in roles)
@@ -63,6 +61,5 @@ namespace Business.services
             var roles = await _userRol.GetRolUserAsync(idUser);
             return roles;
         }
-
     }
 }
